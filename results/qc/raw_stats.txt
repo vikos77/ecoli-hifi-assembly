@@ -1,0 +1,2 @@
+file                       format  type  num_seqs        sum_len  min_len   avg_len  max_len
+../data/SRR10971019.fastq  FASTQ   DNA     95,514  1,389,500,381    1,039  14,547.6   20,272

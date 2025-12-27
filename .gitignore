@@ -1,0 +1,10 @@
+# Ignore large sequencing data files
+data/*.fastq
+data/*.fastq.gz
+data/*.bam
+data/*.sam
+
+# But allow metadata/documentation
+!data/*.md
+!data/*.txt*.fastq
+
