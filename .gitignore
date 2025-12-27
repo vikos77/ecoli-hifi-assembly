@@ -8,3 +8,6 @@ data/*.sam
 !data/*.md
 !data/*.txt*.fastq
 
+#Ignore large assembly data files
+*.bin
+*.gfa
