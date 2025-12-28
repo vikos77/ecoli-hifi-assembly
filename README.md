@@ -13,7 +13,21 @@ Used publicly available PacBio HiFi data for _E. coli_ K-12:
 **Coverage:** ~30-50× after HiFi consensus
 **File size:** ~3 GB
 
-![Methods](figures/Ecoli_long_read_Workflow.png)
+## Methods
+
+```mermaid
+flowchart TD
+    A[Raw PacBio HiFi Reads<br/>SRR10971019<br/>~3 GB, Mean 14.5 kb] --> B[ Quality Control<br/>seqkit stats + NanoPlot]
+    B --> C{Read Length > 10kb?<br/>Quality Q30+?}
+    C -->|Yes ✓| D[ Genome Assembly<br/>hifiasm]
+    C -->|No ✗| E[Wrong dataset!<br/>Not HiFi data]
+    D --> F[ GFA to FASTA<br/>Conversion]
+    F --> G[ Quality Assessment<br/>QUAST + BUSCO]
+    G --> H[ Results<br/>1 contig, 4.67 Mb<br/>100% BUSCO complete]
+    
+    style A fill:#e1f5ff
+    style H fill:#d4edda
+    style E fill:#f8d7da
 
 **Quality Control**
 Used seqkit to verify read length distribution (confirmed mean >10 kb indicating genuine HiFi data, not Illumina). Ran NanoPlot for detailed quality visualization - confirmed Q30+ quality scores across most reads, with some variation due to polymerase processivity differences.
