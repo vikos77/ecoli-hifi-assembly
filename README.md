@@ -1,10 +1,10 @@
 # _E. coli_ PacBio HiFi Genome Assembly
 
-Hands-on project demonstrating bacterial genome assembly using PacBio HiFi long-read sequencing. Successfully assembled E. coli K-12 into a single circular contig with complete genome coverage, showing the advantages of long reads over short-read approaches.
+Hands-on project demonstrating bacterial genome assembly using PacBio HiFi long-read sequencing. Successfully assembled _E. coli_ K-12 into a single circular contig with complete genome coverage, showing the advantages of long reads over short-read approaches.
 
-##Dataset
+## Dataset
 
-Used publicly available PacBio HiFi data for E. coli K-12:
+Used publicly available PacBio HiFi data for _E. coli_ K-12:
 
 **Accession:** SRR10971019 (NCBI SRA)
 **Sequencing platform:** PacBio Sequel II
@@ -13,18 +13,19 @@ Used publicly available PacBio HiFi data for E. coli K-12:
 **Coverage:** ~30-50× after HiFi consensus
 **File size:** ~3 GB
 
-##Methods
+## Methods
 
 **Quality Control**
 Used seqkit to verify read length distribution (confirmed mean >10 kb indicating genuine HiFi data, not Illumina). Ran NanoPlot for detailed quality visualization - confirmed Q30+ quality scores across most reads, with some variation due to polymerase processivity differences.
-Assembly
+
+**Assembly**
 Assembled with hifiasm using default parameters for bacterial genomes. Chose hifiasm because it's optimized for high-accuracy HiFi reads and doesn't waste time on error correction that's already been done during sequencing. Converted the assembly graph (GFA format) to FASTA for downstream analysis.
 Quality Assessment
 
 **QUAST:** Basic assembly statistics (contig count, N50, total length, GC%)
 **BUSCO:** Completeness check using 124 universal bacterial single-copy orthologs
 
-##Results
+## Results
 
 **Assembly Statistics**
 
@@ -33,7 +34,7 @@ Quality Assessment
 **N50:** 4,665,559 bp (entire genome in one piece)
 **GC content:** 50.77%
 
-##BUSCO Completeness
+## BUSCO Completeness
 
 **Complete single-copy:** 124/124 (100%)
 **Complete duplicated:** 0/124 (0%)
@@ -43,14 +44,14 @@ Quality Assessment
 ![Assembly Graph](figures/Assembly_graph.png)
 The assembly graph shows a clean circular structure with a small overlap region (~15.5 kb) representing the collapsed rRNA operons - this is expected because the 7 rRNA operons in E. coli are nearly identical and the HiFi reads (mean 15 kb) can't span enough to distinguish all copies.
 
-##What I Learned
+## What I Learned
 
 **HiFi vs Illumina:** Coming from Illumina sequencing background where bacterial genomes typically fragment into 100+ contigs, achieving a single-contig assembly really showed why long reads matter. The reads span repetitive regions that break short-read assemblies.
 Error correction isn't always necessary: HiFi reads already have consensus built in (multiple passes over the same molecule during sequencing), so assemblers like hifiasm skip the error correction step that's needed for Oxford Nanopore data. This makes the workflow faster.
 Assembly graphs preserve information: The GFA format shows structural ambiguity that gets lost when converting to FASTA. The circular topology and collapsed repeats are visible in Bandage but not in the final sequence file.
 BUSCO validation: Getting 100% completeness confirmed the assembly covers the entire genome with no major gaps or duplications. This is independent validation beyond just assembly statistics.
 
-##Technical Details
+## Technical Details
 
 **Software Versions**
 
@@ -97,7 +98,7 @@ ecoli-hifi-assembly/
     └── assembly_graph.png
 ```
 
-#Running the Analysis
+# Running the Analysis
 
 ```
 # Download data
