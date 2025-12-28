@@ -13,7 +13,7 @@ Used publicly available PacBio HiFi data for _E. coli_ K-12:
 **Coverage:** ~30-50× after HiFi consensus
 **File size:** ~3 GB
 
-## ![Methods](figures/Ecoli_long_read_Workflow.png)
+![Methods](figures/Ecoli_long_read_Workflow.png)
 
 **Quality Control**
 Used seqkit to verify read length distribution (confirmed mean >10 kb indicating genuine HiFi data, not Illumina). Ran NanoPlot for detailed quality visualization - confirmed Q30+ quality scores across most reads, with some variation due to polymerase processivity differences.
