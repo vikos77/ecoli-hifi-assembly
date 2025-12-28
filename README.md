@@ -28,6 +28,8 @@ flowchart TD
     style A fill:#e1f5ff
     style H fill:#d4edda
     style E fill:#f8d7da
+```
+
 
 **Quality Control**
 Used seqkit to verify read length distribution (confirmed mean >10 kb indicating genuine HiFi data, not Illumina). Ran NanoPlot for detailed quality visualization - confirmed Q30+ quality scores across most reads, with some variation due to polymerase processivity differences.
