@@ -1,4 +1,4 @@
-# E. coli PacBio HiFi Genome Assembly
+#*E. coli* PacBio HiFi Genome Assembly
 
 Hands-on project demonstrating bacterial genome assembly using PacBio HiFi long-read sequencing. Successfully assembled E. coli K-12 into a single circular contig with complete genome coverage, showing the advantages of long reads over short-read approaches.
 
