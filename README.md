@@ -34,6 +34,8 @@ flowchart TD
 **Quality Control**
 Used seqkit to verify read length distribution (confirmed mean >10 kb indicating genuine HiFi data, not Illumina). Ran NanoPlot for detailed quality visualization - confirmed Q30+ quality scores across most reads, with some variation due to polymerase processivity differences.
 
+![Nanoplots](results/qc/nanoplot_output/ecoli_hifi_LengthvsQualityScatterPlot_dot.png)
+
 **Assembly**
 Assembled with hifiasm using default parameters for bacterial genomes. Chose hifiasm because it's optimized for high-accuracy HiFi reads and doesn't waste time on error correction that's already been done during sequencing. Converted the assembly graph (GFA format) to FASTA for downstream analysis.
 Quality Assessment
