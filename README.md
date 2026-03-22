@@ -1,6 +1,6 @@
 # _E. coli_ PacBio HiFi Genome Assembly
 
-Hands-on project demonstrating bacterial genome assembly using PacBio HiFi long-read sequencing. Successfully assembled _E. coli_ K-12 into a single circular contig with complete genome coverage, showing the advantages of long reads over short-read approaches.
+End-to-end bacterial genome assembly pipeline using PacBio HiFi long-read sequencing. Assembled _E. coli_ K-12 into a single circular contig with complete genome coverage, demonstrating the advantages of long reads over short-read approaches.
 
 ## Dataset
 
@@ -64,12 +64,15 @@ Quality Assessment
 ![Assembly Graph](figures/Assembly_graph.png)
 The assembly graph shows a clean circular structure with a small overlap region (~15.5 kb) representing the collapsed rRNA operons - this is expected because the 7 rRNA operons in E. coli are nearly identical and the HiFi reads (mean 15 kb) can't span enough to distinguish all copies.
 
-## What I Learned
+## Key Findings
 
-**HiFi vs Illumina:** Coming from Illumina sequencing background where bacterial genomes typically fragment into 100+ contigs, achieving a single-contig assembly really showed why long reads matter. The reads span repetitive regions that break short-read assemblies.
-Error correction isn't always necessary: HiFi reads already have consensus built in (multiple passes over the same molecule during sequencing), so assemblers like hifiasm skip the error correction step that's needed for Oxford Nanopore data. This makes the workflow faster.
-Assembly graphs preserve information: The GFA format shows structural ambiguity that gets lost when converting to FASTA. The circular topology and collapsed repeats are visible in Bandage but not in the final sequence file.
-BUSCO validation: Getting 100% completeness confirmed the assembly covers the entire genome with no major gaps or duplications. This is independent validation beyond just assembly statistics.
+**HiFi vs Illumina contiguity:** Bacterial genomes assembled from short reads typically fragment into 100+ contigs due to repetitive regions. HiFi reads spanning 15 kb bridge repeats that short reads cannot, producing a single-contig assembly in one step without scaffolding.
+
+**Error correction is built in:** HiFi reads already incorporate consensus from multiple polymerase passes over the same molecule, so hifiasm skips the error-correction stage required for raw Oxford Nanopore data. This simplifies the pipeline and reduces runtime.
+
+**Assembly graphs preserve information lost in FASTA:** The GFA format captures structural ambiguity — circular topology and collapsed rRNA repeats — that disappears when converting to FASTA. Bandage graph visualisation is a necessary step for interpreting assembly results, not just a cosmetic one.
+
+**BUSCO provides independent completeness validation:** 100% completeness against 124 universal bacterial orthologs confirms full genome coverage independent of reference comparison. This is a stronger claim than assembly statistics alone.
 
 ## Technical Details
 
@@ -135,8 +138,14 @@ bash 03_assembly.sh
 bash 04_assessment.sh
 ```
 
-**Comparison to Short-Read Assembly**
+## Pipeline Series
 
-From my previous work with Illumina sequencing (150 bp paired-end for 16S rRNA analysis), I know bacterial genomes typically fragment into hundreds of contigs when using short reads. The assembler can't bridge repetitive regions like rRNA operons because the reads are too short to span them, so you end up with broken assemblies that need additional scaffolding steps to piece together.
-With HiFi reads averaging 15 kb, the assembler could span most repeats and produce a single contig representing the complete chromosome. The only region that collapsed was the rRNA operons (~15.5 kb total of nearly identical sequence), which makes sense since the read length wasn't quite long enough to distinguish all 7 copies. If I had used ultra-long Oxford Nanopore reads (100+ kb), even those would likely resolve into their proper locations.
-The main advantage I saw was not needing to worry about scaffolding or gap-filling - the assembly was essentially complete in one step. For bacterial genomics, HiFi reads seem like the clear choice when you want a finished genome rather than a draft assembly.
+1. **_E. coli_ HiFi Assembly** (this repo) — Haploid bacterium, 1 contig, 100% BUSCO
+2. [**_Candida albicans_ Diploid Assembly**](https://github.com/vikos77/Candida-HIFI-Assembly) — Diploid fungus, HiFi-only `--primary`, 209 contigs, 95.8% BUSCO
+3. [**_S. cerevisiae_ Hi-C Phased Assembly**](https://github.com/vikos77/yeast-hifi-hic-assembly) — Diploid yeast, HiFi+Hi-C, 17+16 contigs, chromosome-level, 96%/89% BUSCO
+
+## Comparison to Short-Read Assembly
+
+Short-read assemblers (150 bp paired-end Illumina) cannot bridge repetitive regions like rRNA operons, producing fragmented assemblies that require additional scaffolding. With HiFi reads averaging 15 kb, the assembler spans most repeats and produces a single contig representing the complete chromosome.
+
+The one collapsed region is the rRNA operon cluster (~15.5 kb of nearly identical sequence across 7 copies) — visible as a small loop in the Bandage graph. Ultra-long Nanopore reads (100+ kb) would likely resolve even this region. For finished bacterial genome assembly, HiFi is the practical choice: complete in a single assembly step with no gap-filling required.
