@@ -70,7 +70,7 @@ The assembly graph shows a clean circular structure with a small overlap region 
 
 **Error correction is built in:** HiFi reads already incorporate consensus from multiple polymerase passes over the same molecule, so hifiasm skips the error-correction stage required for raw Oxford Nanopore data. This simplifies the pipeline and reduces runtime.
 
-**Assembly graphs preserve information lost in FASTA:** The GFA format captures structural ambiguity — circular topology and collapsed rRNA repeats — that disappears when converting to FASTA. Bandage graph visualisation is a necessary step for interpreting assembly results, not just a cosmetic one.
+**Assembly graphs preserve information lost in FASTA:** The GFA format captures structural ambiguity (circular topology and collapsed rRNA repeats) that disappears when converting to FASTA. Bandage graph visualisation is a necessary step for interpreting assembly results, not just a cosmetic one.
 
 **BUSCO provides independent completeness validation:** 100% completeness against 124 universal bacterial orthologs confirms full genome coverage independent of reference comparison. This is a stronger claim than assembly statistics alone.
 
@@ -140,12 +140,12 @@ bash 04_assessment.sh
 
 ## Pipeline Series
 
-1. **_E. coli_ HiFi Assembly** (this repo) — Haploid bacterium, 1 contig, 100% BUSCO
-2. [**_Candida albicans_ Diploid Assembly**](https://github.com/vikos77/Candida-HIFI-Assembly) — Diploid fungus, HiFi-only `--primary`, 209 contigs, 95.8% BUSCO
-3. [**_S. cerevisiae_ Hi-C Phased Assembly**](https://github.com/vikos77/yeast-hifi-hic-assembly) — Diploid yeast, HiFi+Hi-C, 17+16 contigs, chromosome-level, 96%/89% BUSCO
+1. **_E. coli_ HiFi Assembly** (this repo): haploid bacterium, 1 contig, 100% BUSCO
+2. [**_Candida albicans_ Diploid Assembly**](https://github.com/vikos77/Candida-HIFI-Assembly): diploid fungus, HiFi-only `--primary`, 209 contigs, 95.8% BUSCO
+3. [**_S. cerevisiae_ Hi-C Phased Assembly**](https://github.com/vikos77/yeast-hifi-hic-assembly): diploid yeast, HiFi+Hi-C, 17+16 contigs, chromosome-level, 96%/89% BUSCO
 
 ## Comparison to Short-Read Assembly
 
 Short-read assemblers (150 bp paired-end Illumina) cannot bridge repetitive regions like rRNA operons, producing fragmented assemblies that require additional scaffolding. With HiFi reads averaging 15 kb, the assembler spans most repeats and produces a single contig representing the complete chromosome.
 
-The one collapsed region is the rRNA operon cluster (~15.5 kb of nearly identical sequence across 7 copies) — visible as a small loop in the Bandage graph. Ultra-long Nanopore reads (100+ kb) would likely resolve even this region. For finished bacterial genome assembly, HiFi is the practical choice: complete in a single assembly step with no gap-filling required.
+The one collapsed region is the rRNA operon cluster (~15.5 kb of nearly identical sequence across 7 copies, visible as a small loop in the Bandage graph. Ultra-long Nanopore reads (100+ kb) would likely resolve even this region. For finished bacterial genome assembly, HiFi is the practical choice: complete in a single assembly step with no gap-filling required.
